@@ -10,7 +10,6 @@ let user = {
 let userJson = JSON.stringify(user);
 
 
-
 fs.writeFile('data.json', userJson, (err)=> {
     if(err){
         console.error(err);
