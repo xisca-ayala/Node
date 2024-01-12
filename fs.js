@@ -10,20 +10,22 @@ let user = {
 let userJson = JSON.stringify(user);
 
 
-fs.writeFile('data.json', userJson, (err)=> {
-    if(err){
-        console.error(err);
-    }else{
-        console.log ('El arxivo ha sido creado con éxito')
-        fs.readFile('data.json', 'utf-8', (err,data)=> {
-            if(err){
-                console.error(err);
-            }
-            console.log(JSON.parse(data));
-        })
+// fs.writeFile('data.json', userJson, (err)=> {
+//     if(err){
+//         console.error(err);
+//     }else{
+//         console.log ('El arxivo ha sido creado con éxito')
+//         fs.readFile('data.json', 'utf-8', (err,data)=> {
+//             if(err){
+//                 console.error(err);
+//             }
+//             console.log(JSON.parse(data));
+//         })
 
-    }
-});
+//     }
+// });
+
+
 
 
 
