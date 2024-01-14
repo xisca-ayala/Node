@@ -14,15 +14,14 @@ fs.writeFile('data.json', userJson, (err)=> {
     if(err){
         console.error(err);
     }else{
-        console.log ('El arxivo ha sido escrito con éxito')
+        console.log ('El archivo ha sido creado con éxito');
         fs.readFile('data.json', 'utf-8', (err,data)=> {
             if(err){
                 console.error(err);
             }
             console.log(JSON.parse(data));
-    })
+        })
     }
 });
-
 
 
