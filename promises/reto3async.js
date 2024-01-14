@@ -1,3 +1,4 @@
+const { log } = require('console');
 const fs = require('fs/promises');
 const readline = require ('readline');
 
@@ -22,25 +23,21 @@ let user = {
 }; 
 
 
-pregunta('Cuál es tu nombre?')
-    .then((name) => {
-        user.name = name; 
-        return pregunta('Cuál es tu apellido?')
-    })
-    .then((surName)=> { 
-        user.surName = surName;
-        return pregunta('Cuál es tu edad?')
-    })
-    .then((age)=>{
-        user.age = age;
+async function questions(){
+    try{
+        user.name = await pregunta('Cuál es tu nombre?')
+        user.surName = await pregunta('Cuál es tu apellido?')
+        user.age = await pregunta('Cuál es tu edad?')
         let userJson = JSON.stringify(user);
+        await fs.writeFile('data.json', userJson)
         console.log(userJson);
-        return fs.writeFile('data.json', userJson)
-    })
-    .catch(err => {
-        console.error(err);
-    })
 
+    }catch(err){
+        console.error(err);
+    }
+}
+
+questions(); 
 
 
 
