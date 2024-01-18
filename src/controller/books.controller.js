@@ -1,28 +1,38 @@
 const Book = require("../models/book");
+const Response = require("../models/response");
 
-let books = [new Book('Test title', 'Test type', 'Test author', 123, 'Test photo', 1)];
+let books = [
+    new Book("El día que Nietzsche lloró", "blanda", "Irvin D. Yalom", 19, "/assets/img/imgBooks/Nietzsche.jpeg", 1 ),
+    new Book("El monje que vendió su ferrari", "blanda", "Robin Sharma", 11, "/assets/img/imgBooks/monje.jpg", 2),
+    new Book("Reina roja", "dura ", "Juan Gómez-Jurado", 21,"/assets/img/imgBooks/reina.jpg", 3 )
+];
+
+let response = new Response(false, 200, '', null);
 
 function getBooks(req, res){
-    let response;
-    let message;
+    res.status(200);
     if(req.query.id) {
-        message = 'Libro encontrado';
-        response = books.filter(book => book.id == req.query.id);
-        if(response.length == 0) {
-            message = 'Libro no encontrado';
+        const filteredBooks = books.filter(book => book.id == req.query.id);
+        response.message = 'Libro econtrado';
+        response.data = filteredBooks;
+        if(filteredBooks.length == 0) {
+            response.err = true;
+            response.code = 404;
+            response.message = 'Libro no encontrado';
+            response.data = books;
+            res.status(404);
         }
     } else {
-        message = 'Todos los libros';
-        response = books;
-    }
-    res.status(200).send({message: message,
-        data: response});
+        response.message = 'Listado de libros';
+        response.data = books;
+        }
+    res.send(response);
 }
 
 function createBook(req, res){
-    let message;
+    res.status(200);
     if(books.findIndex(book => book.id == req.query.id) >= 0){
-        message = 'Un libro con este id ya existe';
+        response.message = 'Ya existe un libro con este id';
     } else {
         let book = new Book(req.query.title, 
             req.query.type, 
@@ -30,11 +40,10 @@ function createBook(req, res){
             req.query.price, 
             req.query.photo, 
             req.query.id);
-
         books.push(book);
-        message = 'Libro creado';
+        response.message = 'Libro creado';
     }
-    res.status(200).send({message: message});
+    res.send(response);
 }
 
 function updateBook(req, res){
