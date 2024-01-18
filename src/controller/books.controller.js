@@ -3,20 +3,20 @@ const Book = require("../models/book");
 let books = [new Book('Test title', 'Test type', 'Test author', 123, 'Test photo', 1)];
 
 function getBooks(req, res){
-    let result;
+    let response;
     let message;
     if(req.query.id) {
         message = 'Libro encontrado';
-        result = books.filter(book => book.id == req.query.id);
-        if(result.length == 0) {
+        response = books.filter(book => book.id == req.query.id);
+        if(response.length == 0) {
             message = 'Libro no encontrado';
         }
     } else {
         message = 'Todos los libros';
-        result = books;
+        response = books;
     }
     res.status(200).send({message: message,
-        data: result});
+        data: response});
 }
 
 function createBook(req, res){
