@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-// const errorHandling = require("./error/errorHandling");
+const errorHandling = require("./error/errorHandling");
 const bookRouter = require("./router/book.router");
 const booksRouter = require("./router/books.router");
 
@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(bookRouter);
 app.use(booksRouter);
-// app.use(errorHandling);
+app.use(errorHandling);
 app.use("/*", function(req, res, next){
     console.log('Petición recibida del cliente');
     console.log('URL: ' + req.hostname);

@@ -76,7 +76,7 @@ function deleteBook(req, res){
             books.splice(books.findIndex(book => book.id == req.query.id), 1);
             message = 'Libro eliminado';
         } else {
-            message = 'Lbro no encontrado';
+            message = 'Libro no encontrado';
         }
 
     } else {
