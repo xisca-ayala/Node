@@ -7,10 +7,8 @@ let books = [
     new Book("Reina roja", "dura ", "Juan Gómez-Jurado", 21,"/assets/img/imgBooks/reina.jpg", 3 )
 ];
 
-let response = new Response(false, 200, '', null);
-
 function getBooks(req, res){
-    res.status(200);
+    let response = new Response(false, 200, '', null);
     if(req.query.id) {
         const filteredBooks = books.filter(book => book.id == req.query.id);
         response.message = 'Libro econtrado';
@@ -20,17 +18,16 @@ function getBooks(req, res){
             response.code = 404;
             response.message = 'Libro no encontrado';
             response.data = books;
-            res.status(404);
         }
     } else {
         response.message = 'Listado de libros';
         response.data = books;
         }
-    res.send(response);
+    res.status(200).send(response);
 }
 
 function createBook(req, res){
-    res.status(200);
+    let response = new Response(false, 200, '', null);
     if(books.findIndex(book => book.id == req.query.id) >= 0){
         response.message = 'Ya existe un libro con este id';
     } else {
@@ -45,11 +42,11 @@ function createBook(req, res){
         response.message = 'Libro creado';
         response.data = book;
     }
-    res.send(response);
+    res.status(200).send(response);
 }
 
 function updateBook(req, res){
-    res.status(200);
+    let response = new Response(false, 200, '', null);
     if(req.body.id && books.findIndex(book => book.id == req.body.id) >= 0){
         let book = new Book(req.body.title, 
             req.body.type, 
@@ -61,27 +58,25 @@ function updateBook(req, res){
         response.message = 'Libro modificado';
         response.data = book;
     } else {
-        res.status(404);
         response.err = true;
         response.code = 404;
         response.message = 'Libro no encontrado';
     }
-    res.send(response);
+    res.status(200).send(response);
 }
 
 function deleteBook(req, res){
-    res.status(200);
+    let response = new Response(false, 200, '', null);
     if(req.query.id && books.findIndex(book => book.id == req.query.id) >= 0){
         books.splice(books.findIndex(book => book.id == req.query.id), 1);
         response.message = 'Libro eliminado';
         response.data = books;
     } else {
-        res.status(404);
         response.err = true;
         response.code = 404;
         response.message = 'Libro no encontrado';
     }
-    res.send(response);
+    res.status(200).send(response);
 }
 
 module.exports = {getBooks, createBook, updateBook, deleteBook};

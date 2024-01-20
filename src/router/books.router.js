@@ -4,9 +4,9 @@ const booksCtrl = require('../controller/books.controller');
 
 router.get("/books", booksCtrl.getBooks);
 
-router.post("/books/:book", booksCtrl.createBook);
+router.post("/books", booksCtrl.createBook);
 
-router.put("/books/:book", booksCtrl.updateBook);
+router.put("/books", booksCtrl.updateBook);
 
 router.delete("/books", booksCtrl.deleteBook);
 
