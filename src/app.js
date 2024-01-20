@@ -14,13 +14,6 @@ app.use(express.json());
 app.use(bookRouter);
 app.use(booksRouter);
 app.use(errorHandling);
-app.use("/*", function(req, res, next){
-    console.log('Petición recibida del cliente');
-    console.log('URL: ' + req.hostname);
-    console.log('Method: ' + req.method);
-    console.log('User-agent: ' + req.headers["user-agent"]);
-    next();
-});
 
 app.get("/", function(req, res){
     res.status(200).send({ok: true,

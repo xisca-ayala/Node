@@ -34,55 +34,54 @@ function createBook(req, res){
     if(books.findIndex(book => book.id == req.query.id) >= 0){
         response.message = 'Ya existe un libro con este id';
     } else {
-        let book = new Book(req.query.title, 
-            req.query.type, 
-            req.query.author, 
-            req.query.price, 
-            req.query.photo, 
-            req.query.id);
+        let book = new Book(
+            req.body.title, 
+            req.body.type, 
+            req.body.author, 
+            req.body.price, 
+            req.body.photo, 
+            req.body.id);
         books.push(book);
         response.message = 'Libro creado';
+        response.data = book;
     }
     res.send(response);
 }
 
 function updateBook(req, res){
-    let message;
-    if(req.query.id) {
-        if(books.findIndex(book => book.id == req.query.id) >= 0){
-            let book = new Book(req.query.title, 
-                req.query.type, 
-                req.query.author, 
-                req.query.price, 
-                req.query.photo, 
-                req.query.id);
-
-            books[books.findIndex(book => book.id == req.query.id)] = book;
-            message = 'Libro modificado';
-        } else {
-            message = 'Libro no modificado';
-        }
-
+    res.status(200);
+    if(req.body.id && books.findIndex(book => book.id == req.body.id) >= 0){
+        let book = new Book(req.body.title, 
+            req.body.type, 
+            req.body.author, 
+            req.body.price, 
+            req.body.photo, 
+            req.body.id);
+        books[books.findIndex(book => book.id == req.body.id)] = book;
+        response.message = 'Libro modificado';
+        response.data = book;
     } else {
-        message = 'Libro no encontrado';
+        res.status(404);
+        response.err = true;
+        response.code = 404;
+        response.message = 'Libro no encontrado';
     }
-    res.status(200).send({message: message});
+    res.send(response);
 }
 
 function deleteBook(req, res){
-    let message;
-    if(req.query.id){
-        if(books.findIndex(book => book.id == req.query.id) >= 0){
-            books.splice(books.findIndex(book => book.id == req.query.id), 1);
-            message = 'Libro eliminado';
-        } else {
-            message = 'Libro no encontrado';
-        }
-
+    res.status(200);
+    if(req.query.id && books.findIndex(book => book.id == req.query.id) >= 0){
+        books.splice(books.findIndex(book => book.id == req.query.id), 1);
+        response.message = 'Libro eliminado';
+        response.data = books;
     } else {
-        message = 'Id del libro no encontrado';
+        res.status(404);
+        response.err = true;
+        response.code = 404;
+        response.message = 'Libro no encontrado';
     }
-    res.status(200).send({message: message});
+    res.send(response);
 }
 
 module.exports = {getBooks, createBook, updateBook, deleteBook};
