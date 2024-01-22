@@ -41,7 +41,7 @@ function updateBook(req, res){
 
 function deleteBook(req, res){
     let response = new Response (false, 200, '', null);
-    if (req.query.id == book.id){
+    if (req.body.id == book.id){
         book = null;
         response.message = 'El libro se ha eliminado';
     }else{

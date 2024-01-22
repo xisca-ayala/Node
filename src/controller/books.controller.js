@@ -67,8 +67,8 @@ function updateBook(req, res){
 
 function deleteBook(req, res){
     let response = new Response(false, 200, '', null);
-    if(req.query.id && books.findIndex(book => book.id == req.query.id) >= 0){
-        books.splice(books.findIndex(book => book.id == req.query.id), 1);
+    if(req.body.id && books.findIndex(book => book.id == req.body.id) >= 0){
+        books.splice(books.findIndex(book => book.id == req.body.id), 1);
         response.message = 'Libro eliminado';
         response.data = books;
     } else {
